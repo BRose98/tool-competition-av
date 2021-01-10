@@ -60,6 +60,7 @@ class BeamngExecutor(AbstractTestExecutor):
                 time.sleep(5)
 
             sim = self._run_simulation(the_test)
+            log.info("Simulation data: %s", sim.min_oob_distance())
 
             if sim.info.success:
                 if sim.exception_str:
@@ -136,7 +137,7 @@ class BeamngExecutor(AbstractTestExecutor):
 
                 assert idx < iterations_count, "Timeout Simulation " + str(sim_data_collector.name)
 
-                sim_data_collector.collect_current_data(oob_bb=True)
+                sim_data_collector.collect_current_data(oob_bb=False, tolerance=0.05)
                 last_state: SimulationDataRecord = sim_data_collector.states[-1]
                 # Target point reached
                 if points_distance(last_state.pos, waypoint_goal.position) < 8.0:

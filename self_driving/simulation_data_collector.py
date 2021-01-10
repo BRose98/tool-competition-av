@@ -5,6 +5,7 @@ from self_driving.road_polygon import RoadPolygon
 from self_driving.simulation_data import SimulationParams, SimulationDataRecords, SimulationData, SimulationDataRecord
 from self_driving.vehicle_state_reader import VehicleStateReader
 
+import logging as log
 
 class SimulationDataCollector:
 
@@ -24,13 +25,13 @@ class SimulationDataCollector:
         self.simulation_data.set(self.params, self.road, self.states)
         self.simulation_data.clean()
 
-    def collect_current_data(self, oob_bb=True, wrt="right"):
+    def collect_current_data(self, oob_bb=True, wrt="right", tolerance=0.1):
         """If oob_bb is True, then the out-of-bound (OOB) examples are calculated
         using the bounding box of the car."""
         self.vehicle_state_reader.update_state()
         car_state = self.vehicle_state_reader.get_state()
 
-        is_oob, oob_counter, max_oob_percentage, oob_distance = self.oob_monitor.get_oob_info(oob_bb=oob_bb, wrt=wrt)
+        is_oob, oob_counter, max_oob_percentage, oob_distance = self.oob_monitor.get_oob_info(oob_bb=oob_bb, wrt=wrt, tolerance=tolerance)
 
         sim_data_record = SimulationDataRecord(**car_state._asdict(),
                                                is_oob=is_oob,

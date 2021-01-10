@@ -11,6 +11,8 @@ from pathlib import Path
 from self_driving.beamng_road_imagery import BeamNGRoadImagery
 from self_driving.decal_road import DecalRoad
 
+import logging as log
+
 SimulationDataRecordProperties = ['timer', 'pos', 'dir', 'vel', 'steering',
                                   'steering_input', 'brake', 'brake_input', 'throttle', 'throttle_input',
                                   'wheelspeed', 'vel_kmh', 'is_oob', 'oob_counter',

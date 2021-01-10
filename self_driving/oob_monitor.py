@@ -5,6 +5,8 @@ from shapely.geometry import Point, Polygon
 from self_driving.road_polygon import RoadPolygon
 from self_driving.vehicle_state_reader import VehicleStateReader
 
+import logging as log
+
 
 class OutOfBoundsMonitor:
     def __init__(self, road_polygon: RoadPolygon, vehicle_state_reader: VehicleStateReader):
@@ -17,7 +19,7 @@ class OutOfBoundsMonitor:
         self.last_max_oob_percentage = 0
 
     # Why tolerance is 1?
-    def get_oob_info(self, wrt="right", oob_bb=True, tolerance=0.95) -> Tuple[bool, int, float]:
+    def get_oob_info(self, wrt="right", oob_bb=True, tolerance=0.05) -> Tuple[bool, int, float]:
         if oob_bb:
             is_oob = self.is_oob_bb(tolerance=tolerance, wrt=wrt)
             self.update_oob_percentage(is_oob)
